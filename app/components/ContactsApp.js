@@ -26,11 +26,18 @@ class ContactsApp extends Component {
     })
   }
 
+  handleClickButton() {
+    ContactsApp.requestInitialData().then(contacts => {
+      this.setState({ contacts, filterText: '' });
+    });
+  }
+
   render() {
     return (
       <div>
         <SearchBar filterText={this.state.filterText}
-                   onUserInput={this.handleUserInput.bind(this)} />
+                   onUserInput={this.handleUserInput.bind(this)} 
+                   onReload={this.handleClickButton.bind(this)} />
         <ContactList contacts={this.state.contacts}
                      filterText={this.state.filterText} />
       </div>

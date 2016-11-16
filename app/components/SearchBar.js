@@ -5,16 +5,27 @@ class SearchBar extends Component {
     this.props.onUserInput(event.target.value)
   }
 
+  handleClick() {
+    this.props.onReload();
+  }
+
   render() {
-    return <input type="search"
+    return (
+    <div>
+    <input type="search"
                   placeholder="search"
                   value={this.props.filterText}
                   onChange={this.handleChange.bind(this)} />
+    <input type="button" value="Load"
+      onClick={this.handleClick.bind(this)} />
+    </div>
+    )
   }
 }
 
 SearchBar.propTypes = {
   onUserInput: PropTypes.func.isRequired,
+  onReload: PropTypes.func.isRequired,
   filterText: PropTypes.string.isRequired
 }
 

@@ -2,15 +2,13 @@ import fs from 'fs';
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { match, RoutingContext } from 'react-router';
+import { match, RouterContext } from 'react-router';
 import routes from './app/routes';
 
 const app = express();
 app.set('views', './');
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
-
-const contacts = JSON.parse(fs.readFileSync(__dirname + '/public/contacts.json', 'utf-8'));
 
 let getPropsFromRoute = ({routes}, componentProps) => {
   let props = {};
@@ -37,7 +35,7 @@ let renderRoute = (response, renderProps) => {
       response.render('index', {
         reactInitialData: JSON.stringify(data),
         content: renderToString(
-          <RoutingContext createElement={handleCreateElement} {...renderProps} />
+          <RouterContext createElement={handleCreateElement} {...renderProps} />
         )
       });
     });
@@ -45,7 +43,7 @@ let renderRoute = (response, renderProps) => {
     response.render('index', {
       reactInitialData: null,
       content: renderToString(
-        <RoutingContext {...renderProps} />
+        <RouterContext {...renderProps} />
       )
     });
   }
